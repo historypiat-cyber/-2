@@ -14,23 +14,19 @@
 #include <stdio.h>
 #include <math.h>
 
-// Обчислення вкладених коренів (внутрішня рекурсія)
 double nested_sqrt(int i, int k) {
-    if (i == k) return sqrt(1.0 / i);
-    return sqrt((1.0 / i) + 0.5 * nested_sqrt(i + 1, k));
+    if(i==k) return sqrt(1.0 / i);                 
+    return sqrt(  (1.0 / i) + 0.5 * nested_sqrt(i + 1, k)  );  //obchyslennya osnovnoyi chastyny
 }
 
-// Отримання значення a_k
 double get_ak(int k) {
-    return 0.5 * nested_sqrt(1, k);
+    return 0.5 * nested_sqrt(1, k);                        //ostanniy chlen mnozhytsya na 1/2
 }
 
-// Обчислення суми (зовнішня рекурсія)
 double calculate_sum(int k) {
-    // Тільки базовий випадок для зупинки: k вже гарантовано >= 1
-    if (k == 1) return get_ak(1) / 3.0;
-    
-    return (get_ak(k) / pow(3, k)) + calculate_sum(k - 1);
+    if(k==1) return get_ak(1) / 3.0;                      
+                                                            //obchyslennya summy   
+    return (  get_ak(k) / pow(3, k)  ) + calculate_sum(k-1);
 }
 
 
@@ -39,16 +35,14 @@ double calculate_sum(int k) {
 
     while (1) {
         printf("Введіть n (n >= 1): ");
-        if (scanf("%d", &n) == 1 && n >= 1) {
-            break; // Вихід, якщо введення коректне
-        }
-        // Очищення буфера на випадок введення букв, щоб не було нескінченного циклу
-        while(getchar() != '\n'); 
+        if (scanf("%d",&n)==1 && n>=1) { break; }             //perevirka
+ 
+        while(getchar()!='\n'); //shob ne vvely bukvu bo bude bezkinechny zikl
         printf("ERROR ");
     }
 
-    // Тепер n точно >= 1, передаємо в рекурсію
-    printf("S = %.12f\n", calculate_sum(n));
+    printf("S = %.12f\n", calculate_sum(n));   //vyklyk funkziyi yaka potim vyklykaye inshi
     
+
     return 0;
 }
